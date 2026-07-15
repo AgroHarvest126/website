@@ -152,6 +152,12 @@ header.scrolled{
   letter-spacing:-0.01em;
   display:flex; align-items:center; gap:10px;
 }
+   .logo-img{
+    width:36px;
+    height:36px;
+    object-fit:contain;
+    display:block;
+}
 .logo-mark{
   width:24px; height:24px;
   border-radius:6px;
@@ -631,10 +637,10 @@ footer{
      HEADER
      ============================================================ -->
 <header id="site-header">
-  <div class="logo">
-    <span class="logo-mark"></span>
-    AgroHarvest
-  </div>
+<div class="logo">
+    <img src="assets/images/fasie-logo.svg" alt="Фонд содействия инновациям" class="logo-img">
+    <span>Фонд содействия инновациям</span>
+</div>
   <nav>
     <ul class="nav-links">
       <li><a href="#how-it-works">Технология</a></li>
@@ -699,7 +705,7 @@ footer{
 <section id="problem" class="section section-dark-alt">
   <div class="container">
     <div class="eyebrow reveal">Проблема</div>
-    <h2 class="reveal">Обычные датчики умирают раньше, чем окупаются</h2>
+    <h2 class="reveal">Обычные датчики разряжаются раньше, чем окупаются</h2>
     <p class="subtitle reveal">Батарейка в почвенном датчике живёт 6–12 месяцев. Дальше — либо выезд агронома для замены, либо слепая зона в мониторинге поля.</p>
 
     <div class="problem-grid">
@@ -1084,53 +1090,6 @@ footer{
 </section>
 
 <!-- ============================================================
-     ДОРОЖНАЯ КАРТА
-     ============================================================ -->
-<section id="roadmap" class="section section-dark-alt">
-  <div class="container">
-    <div class="eyebrow reveal">Дорожная карта</div>
-    <h2 class="reveal">Куда движется проект</h2>
-    <p class="subtitle reveal">От лабораторного прототипа до серийного продукта.</p>
-
-    <div class="timeline reveal">
-      <div class="timeline-item done">
-        <div class="timeline-dot"></div>
-        <div class="status">Завершён</div>
-        <h4>Лабораторный прототип</h4>
-        <p>Подтверждена работоспособность гальванической пары в лабораторных условиях, замерены базовые электрические характеристики.</p>
-      </div>
-      <div class="timeline-item progress">
-        <div class="timeline-dot"></div>
-        <div class="status">В процессе</div>
-        <h4>Полевые испытания</h4>
-        <p>Установка опытной партии датчиков на тестовых участках, сбор данных о стабильности генерации в разных типах почв.</p>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="status">План</div>
-        <h4>Грантовое финансирование и доработка</h4>
-        <p>Оптимизация конструкции электродов и корпуса при поддержке Фонда содействия инновациям, снижение себестоимости.</p>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="status">План</div>
-        <h4>Пилотные внедрения</h4>
-        <p>Развёртывание партий по 50–100 датчиков в 2–3 коммерческих хозяйствах-партнёрах.</p>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="status">План</div>
-        <h4>Серийное производство</h4>
-        <p>Выход на рынок агрохолдингов и тепличных комплексов с готовым сертифицированным продуктом.</p>
-      </div>
-    </div>
-    <div class="cta-row reveal">
-      <a href="#contact" class="btn btn-primary">Стать пилотным партнёром</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
      FAQ
      ============================================================ -->
 <section id="faq" class="section section-light">
@@ -1212,7 +1171,7 @@ footer{
 
 <footer>
   <span>© 2026 AgroHarvest</span>
-  <span>Ставропольский край · НЦМУ «Агротехнологии будущего»</span>
+  <span>Ставропольский край · Проект реализуется при поддержке Фонда содействия инновациям </span>
 </footer>
 
 <script>
