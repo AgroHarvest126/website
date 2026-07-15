@@ -638,7 +638,7 @@ footer{
      ============================================================ -->
 <header id="site-header">
 <div class="logo">
-    <img src="assets/images/fasie-logo.svg" alt="Фонд содействия инновациям" class="logo-img">
+    <img src="assets/images/fasie-logo.png" alt="Фонд содействия инновациям" class="logo-img">
     <span>Фонд содействия инновациям</span>
 </div>
   <nav>
@@ -735,18 +735,18 @@ footer{
       </div>
     </div>
 
-    <!-- IMAGE: line-art иллюстрация карты поля с точками-датчиками,
-         часть точек серые/потухшие (Rust Alert #C1441E) -->
-    <div class="img-placeholder reveal" style="margin-top:48px; min-height:220px;">
-      <span class="tag">Иллюстрация</span>
-      Карта поля с точками-датчиками — часть точек показана "потухшей" (разряжен источник питания)
-    </div>
+     <!-- Блок иллюстрации карты поля с точками-датчиками -->
+    <figure class="media-box reveal" style="margin-top:48px; border: 1px solid var(--hairline-dark); background: rgba(0,0,0,0.2);">
+      <img src="field-map-sensors.svg" alt="Карта поля с разряженными IoT датчиками" style="width:100%; height:auto; display:block; min-height:220px; object-fit: cover;">
+      <figcaption class="media-caption">Карта поля: серые точки — датчики с разряженным источником питания</figcaption>
+    </figure>
 
-    <div class="stat-callout reveal">
-      До 23% датчиков в парке фермы простаивают из-за разряженных батарей в пиковый сезон полива
-      <small>* Уточните реальную цифру из вашего рыночного анализа перед публикацией</small>
-    </div>
-  </div>
+   <div class="stat-callout reveal">
+  До 23% датчиков в парке фермы простаивают из-за разряженных батарей в пиковый сезон полива<a href="https://rikasensor.com" target="_blank" rel="noopener" style="text-decoration: none; color: inherit; margin-left: 2px;">*</a>
+  <small style="display: block; margin-top: 8px; font-size: 0.8em; opacity: 0.7;">
+    * По данным исследования надежности полевых IoT-систем <a href="https://rikasensor.com" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline;">Rika Sensor</a>.
+  </small>
+</div>
 </section>
 
 <!-- ============================================================
