@@ -1197,42 +1197,50 @@ footer{
 <!-- ============================================================
      КОНТАКТЫ
      ============================================================ -->
-<section id="contact" class="section">
-  <div class="container">
-    <div class="eyebrow reveal">Контакты</div>
-    <h2 class="reveal">Готовы обсудить пилот для вашего хозяйства</h2>
-    <p class="subtitle reveal">Ответим в течение 24 часов. Расскажите о площади и культуре — предложим конфигурацию сети датчиков.</p>
+<!-- СЕКЦИЯ КОНТАКТОВ -->
+<section id="contact" class="section section-dark-alt" style="border-top: 1px solid var(--hairline-dark); padding-top: 80px; padding-bottom: 80px;">
+  <div class="container" style="max-width: 500px; text-align: center;">
+    <div class="eyebrow">Контакты</div>
+    <h2 style="margin-bottom: 32px;">Связаться напрямую</h2>
+    
+    <div style="background: var(--deep-soil); border: 1px solid var(--hairline-dark); padding: 32px 24px; border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 24px;">
+      
+      <!-- ФИО -->
+      <div>
+        <p style="font-family: var(--font-mono); font-size: 11px; color: var(--stone); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Представитель</p>
+        <p style="font-size: 20px; font-weight: 600; color: var(--off-white); font-family: var(--font-display);">Жилин Руслан Сергеевич</p>
+      </div>
 
-    <div class="contact-grid">
-      <form class="reveal" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Отправлено ✓';">
-        <div class="form-field"><label>Имя</label><input type="text" required></div>
-        <div class="form-field"><label>Хозяйство / компания</label><input type="text"></div>
-        <div class="form-field"><label>Телефон или email</label><input type="text" required></div>
-        <div class="form-field"><label>Площадь и культура</label><textarea rows="3"></textarea></div>
-        <button type="submit" class="btn btn-primary">Отправить заявку</button>
-      </form>
-      <div class="contact-side reveal">
-        <div class="item"><span>Email для инвесторов и партнёров</span>invest@agroharvest.ru</div>
-        <div class="item"><span>Telegram-канал проекта</span>@agroharvest</div>
-        <div class="item"><span>Техническая документация</span>Скачать datasheet (PDF)</div>
-        <!-- 3D-МОДЕЛЬ: та же assets/model/model.glb, "закрывающий кадр" -->
-        <div class="media-box" style="margin-top:24px; min-height:220px;">
-          <model-viewer
-            src="assets/model/model.glb"
-            alt="3D-модель устройства AgroHarvest"
-            auto-rotate
-            rotation-per-second="6deg"
-            camera-orbit="200deg 80deg auto"
-            disable-zoom
-            interaction-prompt="none"
-            exposure="0.85"
-            style="background:transparent;">
-          </model-viewer>
+      <!-- Телефон -->
+      <div>
+        <p style="font-family: var(--font-mono); font-size: 11px; color: var(--stone); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Телефон</p>
+        <a href="tel:+79633887017" class="btn btn-secondary" style="height: 46px; padding: 0 24px; font-family: var(--font-mono); font-size: 16px; border-color: rgba(180,255,57,0.2); width: 100%; justify-content: center;">
+          +7 (963) 388-70-17
+        </a>
+      </div>
+
+      <!-- Почта -->
+      <div>
+        <p style="font-family: var(--font-mono); font-size: 11px; color: var(--stone); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Электронная почта</p>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <a href="mailto:zhilin.r.s@yandex.ru" style="font-size: 16px; color: var(--bio); font-weight: 500; font-family: var(--font-mono); text-decoration: underline;">
+            agroharveststav@gmail.com
+          </a>
         </div>
       </div>
+
+      <!-- Telegram -->
+      <div style="border-top: 1px solid var(--hairline-dark); padding-top: 16px;">
+        <p style="font-family: var(--font-mono); font-size: 11px; color: var(--stone); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Telegram проекта</p>
+        <a href="https://t.me" target="_blank" rel="noopener" style="font-size: 16px; color: var(--off-white); font-weight: 500; font-family: var(--font-mono);">
+          @agroharvest
+        </a>
+      </div>
+
     </div>
   </div>
 </section>
+
 
 <footer>
   <span>© 2026 AgroHarvest</span>
