@@ -737,7 +737,7 @@ footer{
 
      <!-- Блок иллюстрации карты поля с точками-датчиками -->
     <figure class="media-box reveal" style="margin-top:48px; border: 1px solid var(--hairline-dark); background: rgba(0,0,0,0.2);">
-      <img src="field-map-sensors.svg" alt="Карта поля с разряженными IoT датчиками" style="width:100%; height:auto; display:block; min-height:220px; object-fit: cover;">
+      <img src="assets/images/field-map-sensors.png" alt="Карта поля с разряженными IoT датчиками" style="width:100%; height:auto; display:block; min-height:220px; object-fit: cover;">
       <figcaption class="media-caption">Карта поля: серые точки — датчики с разряженным источником питания</figcaption>
     </figure>
 
@@ -840,8 +840,8 @@ footer{
         <h4 style="color:var(--bio);">Почвенный гальванический элемент</h4>
         <div class="compare-row"><span>Под растительным покровом</span><span>Да</span></div>
         <div class="compare-row"><span>Обслуживание</span><span>Не требуется</span></div>
-        <div class="compare-row"><span>Срок службы</span><span>Годы</span></div>
-        <div class="compare-row"><span>Зависимость от погоды</span><span>Нет</span></div>
+        <div class="compare-row"><span>Срок службы</span><span>3-5</span></div>
+        <div class="compare-row"><span>Зависимость от погоды</span><span>Низкая</span></div>
       </div>
     </div>
 
@@ -884,11 +884,6 @@ footer{
         <p>Устройство одинаково работает под мульчей, под навесом теплицы и в открытом поле — там, где солнечная генерация энергии невозможна физически.</p>
       </div></div>
       <div class="adv-card reveal"><div class="card">
-        <div class="icon-slot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--bio)" stroke-width="1.5"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M18 10v4"/><path d="M6 10v4"/></svg></div>
-        <h4>Встроенная диагностика</h4>
-        <p>Уровень заряда суперконденсатора и напряжение гальванической пары передаются вместе с данными — косвенный индикатор состояния почвы, дополнительный к основным измерениям.</p>
-      </div></div>
-      <div class="adv-card reveal"><div class="card">
         <div class="icon-slot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--bio)" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
         <h4>Низкая совокупная стоимость</h4>
         <p>При горизонте в 5 лет совокупная стоимость владения ниже, чем у батарейных аналогов, за счёт исключения регулярной закупки и логистики элементов питания.</p>
@@ -896,6 +891,7 @@ footer{
     </div>
   </div>
 </section>
+
 
 <!-- ============================================================
      СРАВНЕНИЕ С ОБЫЧНЫМИ ДАТЧИКАМИ
@@ -916,17 +912,91 @@ footer{
           </tr>
         </thead>
         <tbody id="compare-table-body" style="font-family:var(--font-mono);">
-          <!-- строки заполняются одинаково, opacity/JS не требуется -->
-          <tr style="border-bottom:1px solid var(--hairline-light);"><td style="padding:14px 12px;">Источник питания</td><td style="padding:14px 12px; color:#5b5f54;">Литиевая батарея</td><td style="padding:14px 12px;">Почвенный гальванический элемент + суперконденсатор</td></tr>
-          <tr style="border-bottom:1px solid var(--hairline-light);"><td style="padding:14px 12px;">Интервал замены</td><td style="padding:14px 12px; color:#5b5f54;">6–12 месяцев</td><td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Не требуется</td></tr>
-          <tr style="border-bottom:1px solid var(--hairline-light);"><td style="padding:14px 12px;">Точность влажности</td><td style="padding:14px 12px; color:#5b5f54;">0–100%</td><td style="padding:14px 12px;">0–100%</td></tr>
-          <tr style="border-bottom:1px solid var(--hairline-light);"><td style="padding:14px 12px;">Точность температуры</td><td style="padding:14px 12px; color:#5b5f54;">±0.5°C</td><td style="padding:14px 12px;">±0.5°C</td></tr>
-          <tr style="border-bottom:1px solid var(--hairline-light);"><td style="padding:14px 12px;">Протокол передачи</td><td style="padding:14px 12px; color:#5b5f54;">LoRa / NB-IoT</td><td style="padding:14px 12px;">LoRa</td></tr>
-          <tr style="border-bottom:1px solid var(--hairline-light);"><td style="padding:14px 12px;">Дальность передачи</td><td style="padding:14px 12px; color:#5b5f54;">до 10 км</td><td style="padding:14px 12px;">до 10 км</td></tr>
-          <tr style="border-bottom:1px solid var(--hairline-light);"><td style="padding:14px 12px;">Обслуживание за 5 лет</td><td style="padding:14px 12px; color:#5b5f54;">Батарейки + выезды</td><td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Практически нулевое</td></tr>
-          <tr style="border-bottom:1px solid var(--hairline-light);"><td style="padding:14px 12px;">Работа под мульчей</td><td style="padding:14px 12px; color:#5b5f54;">Ограничена сроком батареи</td><td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Без ограничений</td></tr>
-          <tr><td style="padding:14px 12px;">Класс защиты корпуса</td><td style="padding:14px 12px; color:#5b5f54;">IP67</td><td style="padding:14px 12px;">IP68</td></tr>
-        </tbody>
+  <!-- Источник питания -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Источник питания</td>
+    <td style="padding:14px 12px; color:#5b5f54;">Литиевая батарея</td>
+    <td style="padding:14px 12px;">Почвенный гальванический элемент + аккумулятор</td>
+  </tr>
+  
+  <!-- Замена источника питания -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Замена источника питания</td>
+    <td style="padding:14px 12px; color:#5b5f54;">Каждые 6–12 месяцев</td>
+    <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Не требуется</td>
+  </tr>
+  
+  <!-- Автономность -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Автономность</td>
+    <td style="padding:14px 12px; color:#5b5f54;">Ограничена емкостью батареи</td>
+    <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Потенциально неограниченная при достаточной влажности почвы</td>
+  </tr>
+  
+  <!-- Необходимость обслуживания -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Необходимость обслуживания</td>
+    <td style="padding:14px 12px; color:#5b5f54;">Периодическая замена батареи</td>
+    <td style="padding:14px 12px;">Минимальное обслуживание</td>
+  </tr>
+  
+  <!-- Интервал передачи -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Интервал передачи</td>
+    <td style="padding:14px 12px; color:#5b5f54;">15–60 мин</td>
+    <td style="padding:14px 12px;">От 15 мин</td>
+  </tr>
+  
+  <!-- Протокол передачи -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Протокол передачи</td>
+    <td style="padding:14px 12px; color:#5b5f54;">LoRa / NB-IoT</td>
+    <td style="padding:14px 12px;">LoRa</td>
+  </tr>
+  
+  <!-- Частота -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Частота</td>
+    <td style="padding:14px 12px; color:#5b5f54;">433 / 868 МГц</td>
+    <td style="padding:14px 12px;">433 / 868 МГц</td>
+  </tr>
+  
+  <!-- Дальность передачи -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Дальность передачи</td>
+    <td style="padding:14px 12px; color:#5b5f54;">До 10 км</td>
+    <td style="padding:14px 12px;">До 1 км</td>
+  </tr>
+  
+  <!-- Работа под мульчей -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Работа под мульчей</td>
+    <td style="padding:14px 12px; color:#5b5f54;">Ограничена сроком службы батареи</td>
+    <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Без ограничений по ресурсу источника питания</td>
+  </tr>
+  
+  <!-- Рабочая температура -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Рабочая температура</td>
+    <td style="padding:14px 12px; color:#5b5f54;">−20…+60 °C</td>
+    <td style="padding:14px 12px;">−20…+60 °C</td>
+  </tr>
+  
+  <!-- Класс защиты корпуса -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Класс защиты корпуса</td>
+    <td style="padding:14px 12px; color:#5b5f54;">IP67</td>
+    <td style="padding:14px 12px;">IP55</td>
+  </tr>
+  
+  <!-- Экологичность -->
+  <tr>
+    <td style="padding:14px 12px;">Экологичность</td>
+    <td style="padding:14px 12px; color:#5b5f54;">Требуется утилизация батарей</td>
+    <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Без регулярной замены батарей</td>
+  </tr>
+</tbody>
+
       </table>
     </div>
     <p style="font-size:13px; color:#8a8d80; margin-top:16px;">* Показатели даны для типичного коммерческого датчика влажности почвы на батарейках среднего ценового сегмента. Точные цифры уточняются по вашей модели.</p>
@@ -971,7 +1041,7 @@ footer{
         <!-- IMAGE/ВИДЕО: пока нет ассета для этой сцены — добавьте
              assets/video/vineyard.webm (или фото) и замените блок ниже
              на <video src="assets/video/vineyard.webm" autoplay muted loop playsinline></video> -->
-        <div class="img-placeholder"><span class="tag">Нужен ассет</span>Виноградник / сад</div>
+        <div class="assets/images/vineyard.png"><span class="tag">Нужен ассет</span>Виноградник / сад</div>
         <div class="card-body">
           <h4>Виноградники и сады</h4>
           <p>Долгосрочная установка на многолетних насаждениях — раз установил, забыл на годы, данные идут непрерывно весь вегетационный период и зимой.</p>
@@ -1007,38 +1077,39 @@ footer{
       <div class="specs-group reveal">
         <h4>Питание</h4>
         <div class="spec-row"><span>Источник энергии</span><span>Почвенный гальванический элемент</span></div>
-        <div class="spec-row"><span>Накопитель</span><span>Суперконденсатор</span></div>
-        <div class="spec-row"><span>Рабочее напряжение</span><span>[X.X–X.X] В</span></div>
-        <div class="spec-row"><span>Мин. влажность для генерации</span><span class="count-up" data-target="15">0</span>%</div>
+        <div class="spec-row"><span>Накопитель</span><span>аккумулятор</span></div>
+        <div class="spec-row"><span>Рабочее напряжение</span><span>3.3 В</span></div>
+        <div class="spec-row"><span>Мин. влажность для генерации</span><span>±<span class="count-up" data-target="20">0</span> %</span></div>
       </div>
       <div class="specs-group reveal">
         <h4>Датчики</h4>
-        <div class="spec-row"><span>Диапазон влажности</span><span><span class="count-up" data-target="100">0</span>% об.</span></div>
-        <div class="spec-row"><span>Точность влажности</span><span>±3%</span></div>
-        <div class="spec-row"><span>Диапазон температуры</span><span>−20°C…+60°C</span></div>
-        <div class="spec-row"><span>Точность температуры</span><span>±0.5°C</span></div>
+        <div class="spec-row"><span>Диапазон влажности</span><span>0–<span class="count-up" data-target="100">0</span> %</span></div>
+        <div class="spec-row"><span>Точность влажности</span><span>±3 %</span></div>
+        <div class="spec-row"><span>Диапазон температуры</span><span>−20…+60 °C</span></div>
+        <div class="spec-row"><span>Точность температуры</span><span>±0.5 °C</span></div>
       </div>
       <div class="specs-group reveal">
         <h4>Связь</h4>
         <div class="spec-row"><span>Протокол</span><span>LoRa</span></div>
-        <div class="spec-row"><span>Частота</span><span>868 / 433 МГц</span></div>
-        <div class="spec-row"><span>Дальность (прямая видимость)</span><span><span class="count-up" data-target="10">0</span> км</span></div>
+        <div class="spec-row"><span>Частота</span><span>433 / 868 МГц</span></div>
+        <div class="spec-row"><span>Дальность (прямая видимость)</span><span>до <span class="count-up" data-target="1">0</span> км</span></div>
         <div class="spec-row"><span>Интервал передачи</span><span>от 15 мин</span></div>
       </div>
       <div class="specs-group reveal">
         <h4>Корпус и срок службы</h4>
-        <div class="spec-row"><span>Класс защиты</span><span>IP68</span></div>
-        <div class="spec-row"><span>Рабочая температура корпуса</span><span>−40°C…+85°C</span></div>
-        <div class="spec-row"><span>Срок службы электродов</span><span>[X] лет</span></div>
-        <div class="spec-row"><span>Гарантия</span><span>[X] лет</span></div>
+        <div class="spec-row"><span>Класс защиты</span><span>IP55</span></div>
+        <div class="spec-row"><span>Рабочая температура корпуса</span><span>−40…+85 °C</span></div>
+        <div class="spec-row"><span>Срок службы электродов</span><span>до 5 лет</span></div>
+        <div class="spec-row"><span>Гарантия</span><span>2 года</span></div>
       </div>
     </div>
-    <p style="font-size:13px; color:var(--stone); margin-top:24px;">* Поля в квадратных скобках — подставьте точные цифры из технической документации перед публикацией.</p>
+
     <div class="cta-row reveal">
       <a href="#" class="btn btn-secondary">Скачать полный datasheet (PDF)</a>
     </div>
   </div>
 </section>
+
 
 <!-- ============================================================
      АРХИТЕКТУРА СИСТЕМЫ
