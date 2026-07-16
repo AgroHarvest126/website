@@ -6,11 +6,11 @@
 <title>AgroHarvest — датчик, который питается землёй</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- model-viewer: веб-компонент Google для интерактивных 3D-моделей (.glb) -->
+<!-- model-viewer: веб-компонент Google для интерактивных 3D-моделей (.glb) с auto-rotate и drag-контролем -->
 <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 <style>
 /* ============================================================
-   AGROHARVEST — ДИЗАЙН-СИСТЕМА И СТИЛИ
+   AGROHARVEST — ДИЗАЙН-СИСТЕМА
    ============================================================ */
 :root{
   --deep-soil:#0B0D0A;
@@ -35,7 +35,7 @@
   --radius-lg:24px;
   --radius-pill:100px;
 
-  --section-pad: 120px;
+  --section-pad: 160px;
 }
 
 *{box-sizing:border-box; margin:0; padding:0;}
@@ -59,9 +59,9 @@ h1,h2,h3,h4{
   line-height:1.05;
 }
 h1{font-size:clamp(40px, 6vw, 88px); line-height:1.02; letter-spacing:-0.03em;}
-h2{font-size:clamp(32px, 4.5vw, 56px); margin-bottom: 24px;}
-h3{font-size:clamp(22px, 2.5vw, 32px); font-weight:500; margin-bottom: 16px;}
-h4{font-size:20px; font-weight:500; margin-bottom: 12px;}
+h2{font-size:clamp(32px, 4.5vw, 56px);}
+h3{font-size:clamp(22px, 2.5vw, 32px); font-weight:500;}
+h4{font-size:20px; font-weight:500;}
 
 .eyebrow{
   font-family:var(--font-mono);
@@ -73,13 +73,13 @@ h4{font-size:20px; font-weight:500; margin-bottom: 12px;}
   display:inline-block;
   margin-bottom:16px;
 }
-.section-light .eyebrow { color: var(--rust); }
 
 .section{
   padding:var(--section-pad) 8vw;
   position:relative;
 }
 .section-light{ background:var(--bone); color:var(--ink); }
+.section-light .stone-text{ color:#5b5f54; }
 .section-dark-alt{ background:var(--charcoal); }
 
 .container{max-width:1280px; margin:0 auto;}
@@ -106,7 +106,7 @@ h4{font-size:20px; font-weight:500; margin-bottom: 12px;}
   font-size:15px;
   cursor:pointer;
   border:1px solid transparent;
-  transition:transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
+  transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
   white-space:nowrap;
 }
 .btn-primary{
@@ -152,11 +152,17 @@ header.scrolled{
   letter-spacing:-0.01em;
   display:flex; align-items:center; gap:10px;
 }
+   .logo-img{
+    width:36px;
+    height:36px;
+    object-fit:contain;
+    display:block;
+}
 .logo-mark{
   width:24px; height:24px;
   border-radius:6px;
   background:var(--bio);
-  flex-shrink: 0;
+  position:relative;
 }
 nav{ display:flex; align-items:center; gap:36px; }
 .nav-links{ display:flex; gap:32px; font-size:14px; font-weight:500; color:var(--stone); }
@@ -177,6 +183,12 @@ nav{ display:flex; align-items:center; gap:36px; }
   position:relative;
   overflow:hidden;
 }
+#particle-canvas{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  opacity:0.5;
+  pointer-events:none;
+}
 .hero-grid{
   display:grid;
   grid-template-columns:1.1fr 1fr;
@@ -190,7 +202,6 @@ nav{ display:flex; align-items:center; gap:36px; }
 
 .hero-copy .reveal-line{
   overflow:hidden;
-  margin-bottom: 8px;
 }
 .hero-copy .reveal-line span{
   display:inline-block;
@@ -209,6 +220,7 @@ nav{ display:flex; align-items:center; gap:36px; }
   align-items:center;
   justify-content:center;
 }
+/* IMAGE PLACEHOLDER STYLE — used across the whole site wherever a real asset is needed */
 .img-placeholder{
   width:100%; height:100%;
   min-height:280px;
@@ -232,7 +244,9 @@ nav{ display:flex; align-items:center; gap:36px; }
   letter-spacing:0.06em;
   color:var(--copper);
 }
+.hero-stage .img-placeholder{ cursor:grab; }
 
+/* ---------- REAL MEDIA (video / 3D model) ---------- */
 .media-box{
   width:100%; height:100%;
   border-radius:var(--radius-lg);
@@ -240,13 +254,31 @@ nav{ display:flex; align-items:center; gap:36px; }
   position:relative;
   min-height:280px;
 }
+.media-box video{
+  width:100%; height:100%;
+  object-fit:cover;
+  display:block;
+}
 .media-box model-viewer{
   width:100%; height:100%;
-  min-height:350px;
+  min-height:280px;
   --poster-color:transparent;
   background:transparent;
 }
 .hero-stage model-viewer{ min-height:420px; }
+.carousel-card .media-box{ border-radius:0; aspect-ratio:4/3; min-height:auto; border-bottom:1px solid var(--hairline-dark); }
+.carousel-card .media-box video{ aspect-ratio:4/3; }
+.step .media-box{ min-height:200px; border:1px solid var(--hairline-dark); }
+.media-caption{
+  position:absolute; bottom:0; left:0; right:0;
+  padding:10px 14px;
+  font-family:var(--font-mono);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--off-white);
+  background:linear-gradient(to top, rgba(11,13,10,0.85), transparent);
+}
 
 .hero-metric{
   margin-top:56px;
@@ -262,7 +294,7 @@ nav{ display:flex; align-items:center; gap:36px; }
 }
 .hero-metric b{ color:var(--bio); font-size:20px; }
 
-/* ---------- PROBLEM SECTION ---------- */
+/* ---------- PROBLEM ---------- */
 .problem-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -272,120 +304,1073 @@ nav{ display:flex; align-items:center; gap:36px; }
 @media (max-width:900px){ .problem-grid{ grid-template-columns:1fr; } }
 
 .card{
+  background:var(--deep-soil);
+  border:1px solid var(--hairline-dark);
+  border-radius:var(--radius-lg);
+  padding:32px;
+  transition:border-color .3s ease, transform .3s ease;
+}
+.section-light .card{ background:#fff; border-color:var(--hairline-light); }
+.card:hover{ border-color:var(--bio-dim); }
+.card .icon-slot{
+  width:44px; height:44px;
+  border-radius:12px;
+  background:rgba(180,255,57,0.08);
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:20px;
+}
+.card p{ color:var(--stone); margin-top:12px; font-size:15px; }
+.section-light .card p{ color:#5b5f54; }
+
+.stat-callout{
+  margin-top:56px;
+  font-family:var(--font-mono);
+  color:var(--rust);
+  font-size:clamp(28px,4vw,44px);
+  font-weight:600;
+}
+.stat-callout small{
+  display:block;
+  font-family:var(--font-body);
+  font-size:14px;
+  font-weight:400;
+  color:var(--stone);
+  margin-top:8px;
+}
+
+/* ---------- STEPPER (how it works) ---------- */
+.stepper{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  margin-top:80px;
+}
+.step{
+  display:grid;
+  grid-template-columns:80px 1fr 1fr;
+  gap:40px;
+  align-items:center;
+  padding:48px 0;
+  border-top:1px solid var(--hairline-dark);
+}
+.step:last-child{ border-bottom:1px solid var(--hairline-dark); }
+.step .step-num{
+  font-family:var(--font-mono);
+  font-size:14px;
+  color:var(--bio);
+}
+@media (max-width:900px){
+  .step{ grid-template-columns:1fr; gap:16px; }
+}
+
+/* ---------- WHY GALVANIC / COMPARE TABLE ---------- */
+.compare-cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
+  margin-top:64px;
+  border:1px solid var(--hairline-dark);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+}
+.section-light .compare-cards{ border-color:var(--hairline-light); }
+.compare-col{
+  padding:32px;
+  border-right:1px solid var(--hairline-dark);
+}
+.section-light .compare-col{ border-color:var(--hairline-light); }
+.compare-col:last-child{ border-right:none; }
+.compare-col.featured{
+  background:rgba(180,255,57,0.05);
+  transform:translateY(-8px);
+  box-shadow:0 0 0 1px var(--bio-dim);
+}
+.compare-col h4{ margin-bottom:20px; }
+.compare-row{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 0;
+  border-top:1px solid var(--hairline-dark);
+  font-size:14px;
+  color:var(--stone);
+}
+.section-light .compare-row{ border-color:var(--hairline-light); color:#5b5f54; }
+.compare-row:first-of-type{ border-top:none; }
+
+@media (max-width:900px){
+  .compare-cards{ grid-template-columns:1fr; }
+  .compare-col{ border-right:none; border-bottom:1px solid var(--hairline-dark); }
+  .compare-col.featured{ transform:none; }
+}
+
+/* ---------- ADVANTAGES GRID ---------- */
+.adv-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  margin-top:64px;
+}
+@media (max-width:900px){ .adv-grid{ grid-template-columns:1fr; } }
+.adv-card{ perspective:800px; }
+.adv-card .card{ transition:transform .3s ease, border-color .3s ease; transform-style:preserve-3d; }
+.adv-card:hover .card{ transform:rotateX(2deg) rotateY(-2deg) translateY(-4px); border-color:var(--bio-dim); }
+
+/* ---------- USE CASES CAROUSEL ---------- */
+.carousel{
+  display:flex;
+  gap:24px;
+  margin-top:64px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding-bottom:16px;
+}
+.carousel::-webkit-scrollbar{ height:4px; }
+.carousel::-webkit-scrollbar-thumb{ background:var(--hairline-dark); border-radius:4px; }
+.carousel-card{
+  min-width:320px;
+  scroll-snap-align:start;
   background:var(--charcoal);
-  border: 1px solid var(--hairline-dark);
-  border-radius: var(--radius-md);
-  padding: 40px;
-  transition: transform 0.3s ease, border-color 0.3s ease;
+  border:1px solid var(--hairline-dark);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
 }
-.card:hover {
-  transform: translateY(-5px);
-  border-color: var(--bio-dim);
+.carousel-card .img-placeholder{ border-radius:0; aspect-ratio:4/3; min-height:auto; border:none; border-bottom:1px solid var(--hairline-dark); }
+.carousel-card .card-body{ padding:24px; }
+.carousel-card .card-body p{ color:var(--stone); font-size:14px; margin-top:8px; }
+
+/* ---------- SPECS TABLE ---------- */
+.specs-groups{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:48px;
+  margin-top:64px;
 }
-.card .card-icon {
-  font-size: 32px;
-  margin-bottom: 24px;
-  color: var(--copper);
+@media (max-width:900px){ .specs-groups{ grid-template-columns:1fr; } }
+.specs-group h4{
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:16px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--hairline-dark);
 }
-.card p {
-  color: var(--stone);
+.spec-row{
+  display:flex; justify-content:space-between;
+  padding:10px 0;
+  font-family:var(--font-mono);
+  font-size:14px;
+  border-bottom:1px solid var(--hairline-dark);
+}
+.spec-row span:first-child{ color:var(--stone); }
+.spec-row span:last-child{ color:var(--off-white); font-weight:500; }
+.spec-row .count-up{ color:var(--bio); }
+
+/* ---------- ARCHITECTURE ---------- */
+.arch-diagram{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-top:80px;
+  position:relative;
+}
+@media (max-width:900px){ .arch-diagram{ grid-template-columns:1fr; } }
+.arch-node{
+  background:var(--charcoal);
+  border:1px solid var(--hairline-dark);
+  border-radius:var(--radius-lg);
+  padding:24px;
+  position:relative;
+  z-index:2;
+}
+.arch-node .num{ font-family:var(--font-mono); color:var(--copper); font-size:13px; }
+.arch-node p{ color:var(--stone); font-size:13px; margin-top:8px; }
+.arch-line{
+  position:absolute;
+  top:50%; left:0; right:0;
+  height:1px;
+  background:var(--hairline-dark);
+  z-index:1;
+}
+@media (max-width:900px){ .arch-line{ display:none; } }
+.data-packet{
+  position:absolute;
+  top:-3px;
+  width:7px; height:7px;
+  border-radius:50%;
+  background:var(--bio);
+  box-shadow:0 0 8px var(--bio);
+  animation:travel 4s linear infinite;
+}
+@keyframes travel{
+  0%{ left:0%; opacity:0; }
+  10%{ opacity:1; }
+  90%{ opacity:1; }
+  100%{ left:100%; opacity:0; }
 }
 
-/* ---------- HOW IT WORKS ---------- */
-.steps-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
-  margin-top: 64px;
-  align-items: center;
+/* ---------- ROADMAP TIMELINE ---------- */
+.timeline{
+  margin-top:80px;
+  position:relative;
+  padding-left:32px;
 }
-@media (max-width: 900px) { .steps-grid { grid-template-columns: 1fr; } }
+.timeline::before{
+  content:'';
+  position:absolute;
+  left:6px; top:0; bottom:0;
+  width:1px;
+  background:var(--hairline-dark);
+}
+.timeline-item{
+  position:relative;
+  padding-bottom:48px;
+}
+.timeline-item:last-child{ padding-bottom:0; }
+.timeline-dot{
+  position:absolute;
+  left:-32px; top:2px;
+  width:13px; height:13px;
+  border-radius:50%;
+  border:2px solid var(--hairline-dark);
+  background:var(--deep-soil);
+}
+.timeline-item.done .timeline-dot{ background:var(--bio); border-color:var(--bio); }
+.timeline-item.progress .timeline-dot{ border-color:var(--copper); }
+.timeline-item .status{
+  font-family:var(--font-mono);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--stone);
+}
+.timeline-item.done .status{ color:var(--bio); }
+.timeline-item.progress .status{ color:var(--copper); }
+.timeline-item p{ color:var(--stone); margin-top:8px; max-width:640px; }
 
-.step-list {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+/* ---------- FAQ ---------- */
+.faq-list{ margin-top:56px; border-top:1px solid var(--hairline-light); }
+.faq-item{ border-bottom:1px solid var(--hairline-light); }
+.faq-q{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:28px 0;
+  cursor:pointer;
+  font-weight:500;
+  font-size:18px;
 }
-.step-item {
-  display: flex;
-  gap: 24px;
+.faq-toggle{
+  font-family:var(--font-mono);
+  font-size:20px;
+  transition:transform .3s ease;
+  flex-shrink:0;
+  margin-left:24px;
 }
-.step-num {
-  font-family: var(--font-mono);
-  color: var(--rust);
-  font-weight: 600;
-  font-size: 20px;
+.faq-item.open .faq-toggle{ transform:rotate(45deg); }
+.faq-a{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .35s ease;
+  color:#5b5f54;
+  font-size:15px;
 }
+.faq-a p{ padding-bottom:28px; max-width:720px; }
+.faq-item.open .faq-a{ max-height:300px; }
 
-/* ---------- CALC COEF ---------- */
-.calc-box {
-  background: var(--deep-soil);
-  color: var(--off-white);
-  padding: 40px;
-  border-radius: var(--radius-lg);
-  margin-top: 44px;
-  border: 1px solid var(--hairline-dark);
+/* ---------- CONTACT ---------- */
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:64px;
+  margin-top:64px;
 }
-.range-group {
-  margin-bottom: 32px;
+@media (max-width:900px){ .contact-grid{ grid-template-columns:1fr; } }
+.form-field{ margin-bottom:20px; }
+.form-field label{ display:block; font-size:13px; color:var(--stone); margin-bottom:8px; }
+.form-field input, .form-field textarea{
+  width:100%;
+  background:var(--charcoal);
+  border:1px solid var(--hairline-dark);
+  border-radius:var(--radius-sm);
+  padding:14px 16px;
+  color:var(--off-white);
+  font-family:var(--font-body);
+  font-size:15px;
+  transition:border-color .25s ease, box-shadow .25s ease;
 }
-.range-group label {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 14px;
-  margin-bottom: 12px;
+.form-field input:focus, .form-field textarea:focus{
+  outline:none;
+  border-color:var(--bio);
+  box-shadow:0 0 0 3px var(--bio-dim);
 }
-.range-group input[type="range"] {
-  width: 100%;
-  accent-color: var(--bio);
-}
-.result-display {
-  font-family: var(--font-display);
-  font-size: clamp(24px, 3vw, 40px);
-  color: var(--bio);
-  font-weight: 700;
-  border-top: 1px solid var(--hairline-dark);
-  padding-top: 24px;
-}
+.contact-side .item{ padding:20px 0; border-top:1px solid var(--hairline-dark); }
+.contact-side .item:first-child{ border-top:none; }
+.contact-side .item span{ display:block; font-size:13px; color:var(--stone); margin-bottom:4px; }
 
 /* ---------- FOOTER ---------- */
-footer {
-  padding: 60px 8vw;
-  border-top: 1px solid var(--hairline-dark);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 24px;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--stone);
+footer{
+  padding:48px 8vw;
+  border-top:1px solid var(--hairline-dark);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:16px;
+  font-size:13px;
+  color:var(--stone);
+}
+
+/* ---------- REVEAL ON SCROLL ---------- */
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.reveal.in-view{ opacity:1; transform:translateY(0); }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; transition:none !important; }
 }
 </style>
 </head>
 <body>
 
-  <!-- НАВИГАЦИЯ -->
-  <header id="header">
-    <div class="logo">
-      <div class="logo-mark"></div>
-      <span>AgroHarvest</span>
-    </div>
-    <nav>
-      <div class="nav-links">
-        <a href="#problems">Проблемы</a>
-        <a href="#solution">Технология</a>
-        <a href="#calc">Окупаемость</a>
-      </div>
-      <a href="#calc" class="btn btn-secondary" style="height:40px; padding:0 20px; font-size:13px;">Заказать тест</a>
-    </nav>
-    <button class="mobile-toggle">≡</button>
-  </header>
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header id="site-header">
+<div class="logo">
+    <img src="assets/images/fasie-logo.png" alt="Фонд содействия инновациям" class="logo-img">
+    <span>Фонд содействия инновациям</span>
+</div>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="#how-it-works">Технология</a></li>
+      <li><a href="#specs">Продукт</a></li>
+      <li><a href="#use-cases">Применение</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+  </nav>
+  <a href="#contact" class="btn btn-primary">Связаться</a>
+  <button class="mobile-toggle">☰</button>
+</header>
 
-  <!-- ГЛАВНЫЙ ЭКРАН -->
-  <section id="hero" class="section">
-    <div class="container hero-grid">
-      <div class="hero-copy in-view">
-        <span class="eyebrow">Запущена генерация энергии из почвы</span>
-        <div class="reveal-line"><h1>Датчик, который</h1></div>
-        <div class="reveal-line"><h1>питается землёй.</h1></div>
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section id="hero">
+  <canvas id="particle-canvas"></canvas>
+  <div class="container hero-grid">
+    <div class="hero-copy reveal-container">
+      <div class="eyebrow">Автономный почвенный мониторинг</div>
+      <h1>
+        <span class="reveal-line"><span>Датчик, который питается</span></span><br>
+        <span class="reveal-line"><span>землёй, в которой стоит</span></span>
+      </h1>
+      <p class="subtitle">AgroHarvest превращает саму почву в источник энергии для беспроводных датчиков влажности и температуры. Без батареек. Без замены. Без выезда в поле.</p>
+      <div class="cta-row">
+        <a href="#how-it-works" class="btn btn-primary">Смотреть, как это работает</a>
+        <a href="#contact" class="btn btn-secondary">Запросить пилот для хозяйства</a>
+      </div>
+      <div class="hero-metric">
+        <b id="hero-counter">3</b>
+        <span>года непрерывной передачи данных — без единой замены источника питания</span>
+      </div>
+    </div>
+    <div class="hero-stage">
+      <!-- 3D-МОДЕЛЬ: assets/model/model.glb — устройство AgroHarvest.
+           model-viewer даёт auto-rotate + drag/pinch управление из коробки.
+           camera-orbit/exposure можно подстроить под реальный масштаб модели. -->
+      <div class="media-box">
+        <model-viewer
+          src="assets/model/model.glb"
+          alt="3D-модель устройства AgroHarvest"
+          auto-rotate
+          auto-rotate-delay="800"
+          rotation-per-second="18deg"
+          camera-controls
+          disable-zoom
+          shadow-intensity="1"
+          exposure="1.1"
+          interaction-prompt="none"
+          style="background:transparent;">
+        </model-viewer>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ПРОБЛЕМА
+     ============================================================ -->
+<section id="problem" class="section section-dark-alt">
+  <div class="container">
+    <div class="eyebrow reveal">Проблема</div>
+    <h2 class="reveal">Обычные датчики разряжаются раньше, чем окупаются</h2>
+    <p class="subtitle reveal">Батарейка в почвенном датчике живёт 6–12 месяцев. Дальше — либо выезд агронома для замены, либо слепая зона в мониторинге поля.</p>
+
+    <div class="problem-grid">
+      <div class="card reveal">
+        <div class="icon-slot">
+          <!-- ICON: батарея с индикатором разряда, line-стиль, 1.5px обводка -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rust)" stroke-width="1.5"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M18 10v4"/><path d="M22 10v4"/><path d="M5 10v4"/></svg>
+        </div>
+        <h4>Логистика замены</h4>
+        <p>Один выезд для замены батареек на 50 датчиков в поле площадью от 200 га занимает у агронома целый день. При парке в 200+ устройств замена становится отдельной строкой операционных расходов.</p>
+      </div>
+      <div class="card reveal">
+        <div class="icon-slot">
+          <!-- ICON: значок "нет сигнала" -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rust)" stroke-width="1.5"><path d="M2 2l20 20"/><path d="M8.5 16.5a5 5 0 017 0"/><path d="M5 12.5a10 10 0 013-2.5"/><circle cx="12" cy="20" r="1"/></svg>
+        </div>
+        <h4>Слепые зоны</h4>
+        <p>Датчик, у которого разрядилась батарея, не подаёт сигнал тревоги — он просто замолкает. Хозяйство узнаёт о проблеме с поливом постфактум, когда урожайность уже упала.</p>
+      </div>
+      <div class="card reveal">
+        <div class="icon-slot">
+          <!-- ICON: календарь с крестиком -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rust)" stroke-width="1.5"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M9 15l3 3 3-3"/></svg>
+        </div>
+        <h4>Экономика не сходится</h4>
+        <p>При окупаемости системы точного земледелия в 2–3 сезона ежегодная замена батареек в сотнях точек съедает значимую часть экономического эффекта от самого мониторинга.</p>
+      </div>
+    </div>
+
+     <!-- Блок иллюстрации карты поля с точками-датчиками -->
+    <figure class="media-box reveal" style="margin-top:48px; border: 1px solid var(--hairline-dark); background: rgba(0,0,0,0.2);">
+      <img src="assets/images/field-map-sensor.png" alt="Карта поля с разряженными IoT датчиками" style="width:100%; height:auto; display:block; min-height:220px; object-fit: cover;">
+      <figcaption class="media-caption">Карта поля: серые точки — датчики с разряженным источником питания</figcaption>
+    </figure>
+
+   <div class="stat-callout reveal">
+  До 23% датчиков в парке фермы простаивают из-за разряженных батарей в пиковый сезон полива<a href="https://rikasensor.com" target="_blank" rel="noopener" style="text-decoration: none; color: inherit; margin-left: 2px;">*</a>
+  <small style="display: block; margin-top: 8px; font-size: 0.8em; opacity: 0.7;">
+    * По данным исследования надежности полевых IoT-систем <a href="https://rikasensor.com" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline;">Rika Sensor</a>.
+  </small>
+</div>
+</section>
+
+<!-- ============================================================
+     КАК РАБОТАЕТ ТЕХНОЛОГИЯ
+     ============================================================ -->
+<section id="how-it-works" class="section">
+  <div class="container">
+    <div class="eyebrow reveal">Технология</div>
+    <h2 class="reveal">Три шага: земля → энергия → данные</h2>
+    <p class="subtitle reveal">Никакой магии — только электрохимия, аккумулятор и радиомодуль, работающие в связке.</p>
+
+    <div class="stepper">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div>
+          <h4>Генерация</h4>
+          <p style="color:var(--stone); margin-top:8px;">Два электрода из разных металлов, погружённые в почву, образуют гальваническую пару. Разница электрохимических потенциалов создаёт постоянный слабый ток — тот же принцип, что в лимонной батарейке, только источник — влажный грунт с растворёнными солями.</p>
+        </div>
+        <!-- ВИДЕО: assets/video/iot.webm — устройство/электроника датчика -->
+        <div class="media-box">
+          <video src="assets/video/iot.webm" autoplay muted loop playsinline></video>
+          <div class="media-caption">Электроника датчика в работе</div>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div>
+          <h4>Накопление</h4>
+          <p style="color:var(--stone); margin-top:8px;">Ток слишком слабый, чтобы напрямую питать радиопередатчик. Поэтому энергия копится в аккумуляторе постепенно, в течение минут или часов — как медленно наполняющийся резервуар, — пока не наберётся заряд, достаточный для одной передачи.</p>
+        </div>
+        <!-- 3D-МОДЕЛЬ: та же assets/model/model.glb, другой ракурс камеры —
+             пока нет отдельной cutaway-модели с видимым конденсатором.
+             Когда появится модель в разрезе, замените src ниже. -->
+        <div class="media-box">
+          <model-viewer
+            src="assets/model/model.glb"
+            alt="3D-модель устройства AgroHarvest, вид сбоку"
+            auto-rotate
+            rotation-per-second="10deg"
+            camera-orbit="90deg 75deg auto"
+            disable-zoom
+            interaction-prompt="none"
+            style="background:transparent;">
+          </model-viewer>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div>
+          <h4>Передача</h4>
+          <p style="color:var(--stone); margin-top:8px;">Как только накопленного заряда хватает, модуль LoRa включается на несколько миллисекунд, отправляет пакет данных (влажность, температура, уровень заряда) на приёмную станцию — и снова засыпает, экономя каждый микроджоуль.</p>
+        </div>
+        <!-- ВИДЕО: assets/video/lora.webm — визуализация передачи LoRa -->
+        <div class="media-box">
+          <video src="assets/video/lora.webm" autoplay muted loop playsinline></video>
+          <div class="media-caption">Передача пакета данных по LoRa</div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-row reveal">
+      <a href="#why-galvanic" class="btn btn-secondary">Подробнее о гальваническом элементе</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ПОЧЕМУ ПОЧВЕННЫЙ ГАЛЬВАНИЧЕСКИЙ ЭЛЕМЕНТ
+     ============================================================ -->
+<section id="why-galvanic" class="section section-dark-alt">
+  <div class="container">
+    <div class="eyebrow reveal">Выбор источника энергии</div>
+    <h2 class="reveal">Почему не солнечная панель и не обычная батарейка</h2>
+    <p class="subtitle reveal">Датчик стоит в земле, часто под пологом растений или мульчей — там, где солнца либо нет, либо оно неудобно и уязвимо к загрязнению.</p>
+
+    <div class="compare-cards reveal">
+      <div class="compare-col">
+        <h4>Солнечная панель</h4>
+        <div class="compare-row"><span>Под растительным покровом</span><span>Нет</span></div>
+        <div class="compare-row"><span>Обслуживание</span><span>Очистка панели</span></div>
+        <div class="compare-row"><span>Срок службы</span><span>5–7 лет</span></div>
+        <div class="compare-row"><span>Зависимость от погоды</span><span>Высокая</span></div>
+      </div>
+      <div class="compare-col">
+        <h4>Обычная батарея</h4>
+        <div class="compare-row"><span>Под растительным покровом</span><span>Временно</span></div>
+        <div class="compare-row"><span>Обслуживание</span><span>Замена 6–12 мес</span></div>
+        <div class="compare-row"><span>Срок службы</span><span>6–12 месяцев</span></div>
+        <div class="compare-row"><span>Зависимость от погоды</span><span>Нет</span></div>
+      </div>
+      <div class="compare-col featured">
+        <h4 style="color:var(--bio);">Почвенный гальванический элемент</h4>
+        <div class="compare-row"><span>Под растительным покровом</span><span>Да</span></div>
+        <div class="compare-row"><span>Обслуживание</span><span>Не требуется</span></div>
+        <div class="compare-row"><span>Срок службы</span><span>3-5</span></div>
+        <div class="compare-row"><span>Зависимость от погоды</span><span>Низкая</span></div>
+      </div>
+    </div>
+
+    <p class="subtitle reveal" style="margin-top:40px; max-width:760px;">Почва — стабильный источник энергии именно там, где стоит датчик: не нужно ни солнца, ни ветра, ни выездов на замену. Чем выше влажность почвы, тем сильнее генерируемый ток — источник питания усиливается ровно тогда, когда данные нужнее всего.</p>
+
+    <div class="cta-row reveal">
+      <a href="#specs" class="btn btn-secondary">Смотреть технические характеристики</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ПРЕИМУЩЕСТВА
+     ============================================================ -->
+<section id="advantages" class="section">
+  <div class="container">
+    <div class="eyebrow reveal">Преимущества</div>
+    <h2 class="reveal">Что это меняет для хозяйства</h2>
+    <p class="subtitle reveal">Не абстрактная «инновационность», а конкретные операционные эффекты.</p>
+
+    <div class="adv-grid">
+      <div class="adv-card reveal"><div class="card">
+        <div class="icon-slot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--bio)" stroke-width="1.5"><path d="M14 7l-9 9"/><circle cx="7" cy="7" r="3"/><circle cx="17" cy="17" r="3"/></svg></div>
+        <h4>Нулевое обслуживание</h4>
+        <p>Ноль выездов на замену источника питания за весь срок эксплуатации датчика. Агроном тратит время на анализ данных, а не на логистику батареек.</p>
+      </div></div>
+      <div class="adv-card reveal"><div class="card">
+        <div class="icon-slot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--bio)" stroke-width="1.5"><path d="M3 17l4-6 4 3 5-8 5 5"/></svg></div>
+        <h4>Непрерывность данных</h4>
+        <p>Датчик не «засыпает» между заменами батарей — временной ряд влажности и температуры остаётся сплошным, без пропусков, критичных для моделей прогноза полива.</p>
+      </div></div>
+      <div class="adv-card reveal"><div class="card">
+        <div class="icon-slot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--bio)" stroke-width="1.5"><circle cx="5" cy="5" r="1.5"/><circle cx="12" cy="5" r="1.5"/><circle cx="19" cy="5" r="1.5"/><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></div>
+        <h4>Масштабируемость парка</h4>
+        <p>Экономика при развёртывании 500 датчиков не ухудшается — стоимость обслуживания на единицу не растёт с ростом парка, в отличие от батарейных решений.</p>
+      </div></div>
+      <div class="adv-card reveal"><div class="card">
+        <div class="icon-slot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--bio)" stroke-width="1.5"><path d="M3 21h18"/><path d="M5 21V9l7-6 7 6v12"/></svg></div>
+        <h4>Работа в закрытом грунте</h4>
+        <p>Устройство одинаково работает под мульчей, под навесом теплицы и в открытом поле — там, где солнечная генерация энергии невозможна физически.</p>
+      </div></div>
+      <div class="adv-card reveal"><div class="card">
+        <div class="icon-slot"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--bio)" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
+        <h4>Низкая совокупная стоимость</h4>
+        <p>При горизонте в 5 лет совокупная стоимость владения ниже, чем у батарейных аналогов, за счёт исключения регулярной закупки и логистики элементов питания.</p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     СРАВНЕНИЕ С ОБЫЧНЫМИ ДАТЧИКАМИ
+     ============================================================ -->
+<section id="comparison" class="section section-light">
+  <div class="container">
+    <div class="eyebrow reveal" style="color:var(--copper);">Сравнение</div>
+    <h2 class="reveal">AgroHarvest рядом с батарейным датчиком</h2>
+    <p class="subtitle reveal">Одни и те же измеряемые параметры — разная экономика эксплуатации.</p>
+
+    <div class="reveal" style="margin-top:48px; overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; font-size:14px; min-width:640px;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--hairline-light);">
+            <th style="text-align:left; padding:16px 12px; color:#5b5f54; font-weight:500;">Параметр</th>
+            <th style="text-align:left; padding:16px 12px; color:#5b5f54; font-weight:500;">Батарейный датчик</th>
+            <th style="text-align:left; padding:16px 12px; color:var(--ink); font-weight:600;">AgroHarvest</th>
+          </tr>
+        </thead>
+        <tbody id="compare-table-body" style="font-family:var(--font-mono);">
+  <!-- Источник питания -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Источник питания</td>
+    <td style="padding:14px 12px; color:#5b5f54;">Литиевая батарея</td>
+    <td style="padding:14px 12px;">Почвенный гальванический элемент + аккумулятор</td>
+  </tr>
+  
+  <!-- Замена источника питания -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Замена источника питания</td>
+    <td style="padding:14px 12px; color:#5b5f54;">Каждые 6–12 месяцев</td>
+    <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Не требуется</td>
+  </tr>
+  
+  <!-- Автономность -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Автономность</td>
+    <td style="padding:14px 12px; color:#5b5f54;">Ограничена емкостью батареи</td>
+    <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Потенциально неограниченная при достаточной влажности почвы</td>
+  </tr>
+  
+  <!-- Необходимость обслуживания -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Необходимость обслуживания</td>
+    <td style="padding:14px 12px; color:#5b5f54;">Периодическая замена батареи</td>
+    <td style="padding:14px 12px;">Минимальное обслуживание</td>
+  </tr>
+  
+  <!-- Интервал передачи -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Интервал передачи</td>
+    <td style="padding:14px 12px; color:#5b5f54;">15–60 мин</td>
+    <td style="padding:14px 12px;">От 15 мин</td>
+  </tr>
+  
+  <!-- Протокол передачи -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Протокол передачи</td>
+    <td style="padding:14px 12px; color:#5b5f54;">LoRa / NB-IoT</td>
+    <td style="padding:14px 12px;">LoRa</td>
+  </tr>
+  
+  <!-- Частота -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Частота</td>
+    <td style="padding:14px 12px; color:#5b5f54;">433 / 868 МГц</td>
+    <td style="padding:14px 12px;">433 / 868 МГц</td>
+  </tr>
+  
+  <!-- Дальность передачи -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Дальность передачи</td>
+    <td style="padding:14px 12px; color:#5b5f54;">До 10 км</td>
+    <td style="padding:14px 12px;">До 1 км</td>
+  </tr>
+  
+  <!-- Работа под мульчей -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Работа под мульчей</td>
+    <td style="padding:14px 12px; color:#5b5f54;">Ограничена сроком службы батареи</td>
+    <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Без ограничений по ресурсу источника питания</td>
+  </tr>
+  
+  <!-- Рабочая температура -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Рабочая температура</td>
+    <td style="padding:14px 12px; color:#5b5f54;">−20…+60 °C</td>
+    <td style="padding:14px 12px;">−20…+60 °C</td>
+  </tr>
+  
+  <!-- Класс защиты корпуса -->
+  <tr style="border-bottom:1px solid var(--hairline-light);">
+    <td style="padding:14px 12px;">Класс защиты корпуса</td>
+    <td style="padding:14px 12px; color:#5b5f54;">IP67</td>
+    <td style="padding:14px 12px;">IP55</td>
+  </tr>
+  
+  <!-- Экологичность -->
+  <tr>
+    <td style="padding:14px 12px;">Экологичность</td>
+    <td style="padding:14px 12px; color:#5b5f54;">Требуется утилизация батарей</td>
+    <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Без регулярной замены батарей</td>
+  </tr>
+</tbody>
+
+      </table>
+  </div>
+</section>
+
+<!-- ============================================================
+     ПРИМЕНЕНИЕ
+     ============================================================ -->
+<!-- ============================================================
+     ПРИМЕНЕНИЕ
+     ============================================================ -->
+<section id="use-cases" class="section">
+  <div class="container">
+    <div class="eyebrow reveal">Применение</div>
+    <h2 class="reveal">Где это работает в поле</h2>
+    <p class="subtitle reveal">От открытых полевых культур до защищённого грунта.</p>
+
+    <div class="carousel reveal">
+      
+      <!-- Карточка 1: Полевые культуры -->
+      <div class="carousel-card">
+        <div class="media-box">
+          <video src="assets/video/field.webm" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+          <span class="media-caption">Полевые культуры</span>
+        </div>
+        <div class="card-body">
+          <h4>Полевые культуры</h4>
+          <p>Мониторинг влажности на разных глубинах корневой зоны для пшеницы, кукурузы и подсолнечника — точный полив без пересушивания и переувлажнения.</p>
+        </div>
+      </div>
+
+      <!-- Карточка 2: Теплицы -->
+      <div class="carousel-card">
+        <div class="media-box">
+          <video src="assets/video/greenhouse.webm" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+          <span class="media-caption">Защищённый грунт</span>
+        </div>
+        <div class="card-body">
+          <h4>Теплицы и защищённый грунт</h4>
+          <p>Датчики под мульчей и в грунте теплиц, где солнечная зарядка невозможна, а стабильность данных критична для автоматического полива.</p>
+        </div>
+      </div>
+
+      <!-- Карточка 3: Виноградники -->
+      <div class="carousel-card">
+        <div class="media-box">
+          <img src="assets/images/vineyard.png" alt="Виноградники и сады" style="width:100%; height:100%; object-fit:cover; display:block;">
+          <span class="media-caption">Многолетние насаждения</span>
+        </div>
+        <div class="card-body">
+          <h4>Виноградники и сады</h4>
+          <p>Долгосрочная установка на многолетних насаждениях — раз установил, забыл на годы, данные идут непрерывно весь вегетационный период и зимой.</p>
+        </div>
+      </div>
+
+      <!-- Карточка 4: Полигоны -->
+      <div class="carousel-card">
+        <div class="media-box">
+          <video src="assets/video/polig.webm" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+          <span class="media-caption">Агротехнологии</span>
+        </div>
+        <div class="card-body">
+          <h4>Научные полигоны и НЦМУ</h4>
+          <p>Плотная сеть датчиков для исследовательских задач агротехнологий, где важна синхронность и непрерывность рядов данных.</p>
+        </div>
+      </div>
+
+    </div> <!-- Конец .carousel -->
+
+    <div class="cta-row reveal">
+      <a href="#contact" class="btn btn-primary">Обсудить внедрение для вашей культуры</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ
+     ============================================================ -->
+<section id="specs" class="section section-dark-alt">
+  <div class="container">
+    <div class="eyebrow reveal">Спецификация</div>
+    <h2 class="reveal">Характеристики</h2>
+    <p class="subtitle reveal">Данные для инженеров и агрономов.</p>
+
+    <div class="specs-groups">
+      <div class="specs-group reveal">
+        <h4>Питание</h4>
+        <div class="spec-row"><span>Источник энергии</span><span>Почвенный гальванический элемент</span></div>
+        <div class="spec-row"><span>Накопитель</span><span>аккумулятор</span></div>
+        <div class="spec-row"><span>Рабочее напряжение</span><span>3.3 В</span></div>
+        <div class="spec-row"><span>Мин. влажность для генерации</span><span>±<span class="count-up" data-target="20">0</span> %</span></div>
+      </div>
+      <div class="specs-group reveal">
+        <h4>Датчики</h4>
+        <div class="spec-row"><span>Диапазон влажности</span><span>0–<span class="count-up" data-target="100">0</span> %</span></div>
+        <div class="spec-row"><span>Точность влажности</span><span>±3 %</span></div>
+        <div class="spec-row"><span>Диапазон температуры</span><span>−20…+60 °C</span></div>
+        <div class="spec-row"><span>Точность температуры</span><span>±0.5 °C</span></div>
+      </div>
+      <div class="specs-group reveal">
+        <h4>Связь</h4>
+        <div class="spec-row"><span>Протокол</span><span>LoRa</span></div>
+        <div class="spec-row"><span>Частота</span><span>433 / 868 МГц</span></div>
+        <div class="spec-row"><span>Дальность (прямая видимость)</span><span>до <span class="count-up" data-target="1">0</span> км</span></div>
+        <div class="spec-row"><span>Интервал передачи</span><span>от 15 мин</span></div>
+      </div>
+      <div class="specs-group reveal">
+        <h4>Корпус и срок службы</h4>
+        <div class="spec-row"><span>Класс защиты</span><span>IP55</span></div>
+        <div class="spec-row"><span>Рабочая температура корпуса</span><span>−40…+85 °C</span></div>
+        <div class="spec-row"><span>Срок службы электродов</span><span>до 5 лет</span></div>
+        <div class="spec-row"><span>Гарантия</span><span>2 года</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     АРХИТЕКТУРА СИСТЕМЫ
+     ============================================================ -->
+<section id="architecture" class="section">
+  <div class="container">
+    <div class="eyebrow reveal">Система</div>
+    <h2 class="reveal">От датчика в земле до дашборда агронома</h2>
+    <p class="subtitle reveal">Полная цепочка передачи данных — прозрачно, от электрода до экрана.</p>
+
+    <div class="arch-diagram reveal">
+      <div class="arch-line">
+        <div class="data-packet" style="animation-delay:0s;"></div>
+        <div class="data-packet" style="animation-delay:1.3s;"></div>
+        <div class="data-packet" style="animation-delay:2.6s;"></div>
+      </div>
+      <div class="arch-node">
+        <div class="num">01</div>
+        <h4>Датчик в почве</h4>
+        <p>Гальванический элемент + датчики влажности/температуры + LoRa-модуль. Автономная герметичная капсула.</p>
+      </div>
+      <div class="arch-node">
+        <div class="num">02</div>
+        <h4>LoRa-шлюз</h4>
+        <p>Принимает сигналы от всех датчиков в радиусе до 10 км, агрегирует пакеты и передаёт их через интернет.</p>
+      </div>
+      <div class="arch-node">
+        <div class="num">03</div>
+        <h4>Облачная платформа</h4>
+        <p>Приём, хранение временных рядов, обработка данных, расчёт рекомендаций по поливу.</p>
+      </div>
+      <div class="arch-node">
+        <div class="num">04</div>
+        <h4>Дашборд и уведомления</h4>
+        <p>Веб-интерфейс и push-уведомления: карта поля, история, алерты по критическим значениям.</p>
+      </div>
+    </div>
+
+       <!-- Кастомная line-art схема архитектуры -->
+    <figure class="media-box reveal" style="margin-top:32px; border: 1px solid var(--hairline-dark); background: rgba(0,0,0,0.2);">
+      <img src="assets/images/architecture-scheme.png" alt="Схема архитектуры системы AgroHarvest" style="width:100%; height:auto; display:block; min-height:200px; object-fit: cover;">
+      <figcaption class="media-caption">Изометрическая схема архитектуры системы AgroHarvest</figcaption>
+    </figure>
+
+    <div class="cta-row reveal">
+      <a href="#contact" class="btn btn-secondary">Запросить техническую документацию</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ
+     ============================================================ -->
+<section id="faq" class="section section-light">
+  <div class="container">
+    <div class="eyebrow reveal" style="color:var(--copper);">FAQ</div>
+    <h2 class="reveal">Вопросы, которые задают чаще всего</h2>
+
+    <div class="faq-list reveal">
+      <div class="faq-item open">
+        <div class="faq-q"><span>Сколько энергии реально даёт почва?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a"><p>Достаточно для одной передачи пакета данных каждые 15–30 минут при нормальной влажности. Это на порядки меньше, чем нужно для непрерывной работы, но ровно столько, сколько нужно для периодического мониторинга.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>Что будет в засуху, если почва пересохнет?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a"><p>Генерация тока падает вместе с влажностью — это ожидаемое поведение, а не поломка. Само падение выработки энергии — дополнительный косвенный индикатор пересыхания почвы.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>Как долго живут электроды?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a"><p>Электроды медленно расходуются в процессе реакции, но рассчитаны на срок, кратно превышающий срок службы батарейки — счёт идёт на годы, а не месяцы.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>Можно ли использовать в засолённой почве?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a"><p>Да, и это даже увеличивает выработку тока за счёт повышенной ионной проводимости — состав электролита почвы учитывается при калибровке партии датчиков.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>Какая точность передачи данных на большом поле?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a"><p>До 10 км в прямой видимости, 1–2 км в условиях реального поля с растительностью. Для больших площадей используется сеть из нескольких гейтвеев.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span>Нужна ли подписка на облачную платформу?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a"><p>Уточните вашей моделью монетизации — подписка, разовая покупка или лицензия для хозяйства.</p></div>
+      </div>
+    </div>
+    <div class="cta-row reveal">
+      <a href="#contact" class="btn btn-secondary">Остались вопросы? Написать нам</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     КОНТАКТЫ
+     ============================================================ -->
+<!-- СЕКЦИЯ КОНТАКТОВ -->
+<section id="contact" class="section section-dark-alt" style="border-top: 1px solid var(--hairline-dark); padding-top: 80px; padding-bottom: 80px;">
+  <div class="container" style="max-width: 500px; text-align: center;">
+    <div class="eyebrow">Контакты</div>
+    <h2 style="margin-bottom: 32px;">Связаться напрямую</h2>
+    
+    <div style="background: var(--deep-soil); border: 1px solid var(--hairline-dark); padding: 32px 24px; border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 24px;">
+      
+      <!-- ФИО -->
+      <div>
+        <p style="font-family: var(--font-mono); font-size: 11px; color: var(--stone); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Директор</p>
+        <p style="font-size: 20px; font-weight: 600; color: var(--off-white); font-family: var(--font-display);">Жилин Руслан Сергеевич</p>
+      </div>
+
+      <!-- Телефон -->
+      <div>
+        <p style="font-family: var(--font-mono); font-size: 11px; color: var(--stone); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Телефон</p>
+        <a href="tel:+79633887017" class="btn btn-secondary" style="height: 46px; padding: 0 24px; font-family: var(--font-mono); font-size: 16px; border-color: rgba(180,255,57,0.2); width: 100%; justify-content: center;">
+          +7 (963) 388-70-17
+        </a>
+      </div>
+
+      <!-- Почта -->
+      <div>
+        <p style="font-family: var(--font-mono); font-size: 11px; color: var(--stone); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Электронная почта</p>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <a href="mailto:agroharveststav@gmail.com" style="font-size: 16px; color: var(--bio); font-weight: 500; font-family: var(--font-mono); text-decoration: underline;">
+            agroharveststav@gmail.com
+          </a>
+        </div>
+      </div>
+
+     <!-- Фонд содействия инновациям -->
+      <div style="border-top: 1px solid var(--hairline-dark); padding-top: 16px;">
+        <p style="font-family: var(--font-mono); font-size: 11px; color: var(--stone); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">При поддержке</p>
+        <a href="https://www.fasie.ru" target="_blank" rel="noopener" style="font-size: 15px; color: var(--off-white); font-weight: 500; text-decoration: underline; transition: color 0.2s ease;" onmouseover="this.style.color='var(--bio)'" onmouseout="this.style.color='var(--off-white)'">
+          Фонд содействия инновациям
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<footer>
+  <span>© 2026 AgroHarvest</span>
+  <span>Ставропольский край · Проект реализуется при поддержке Фонда содействия инновациям </span>
+</footer>
+
+<script>
+// ============================================================
+// HEADER SCROLL STATE
+// ============================================================
+const header = document.getElementById('site-header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ============================================================
+// SCROLL REVEAL (IntersectionObserver)
+// ============================================================
+const revealEls = document.querySelectorAll('.reveal, .hero-copy');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('in-view');
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => revealObserver.observe(el));
+
+// ============================================================
+// FAQ ACCORDION
+// ============================================================
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// ============================================================
+// COUNT-UP ANIMATION FOR SPEC NUMBERS
+// ============================================================
+const countEls = document.querySelectorAll('.count-up');
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.dataset.target, 10);
+      let current = 0;
+      const step = Math.max(1, Math.round(target / 40));
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) { current = target; clearInterval(timer); }
+        el.textContent = current;
+      }, 25);
+      countObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+countEls.forEach(el => countObserver.observe(el));
+
+// Hero metric counter (years) — subtle count-up on load
+const heroCounter = document.getElementById('hero-counter');
+let heroVal = 0;
+const heroTarget = 3;
+const heroTimer = setInterval(() => {
+  heroVal++;
+  heroCounter.textContent = heroVal;
+  if (heroVal >= heroTarget) clearInterval(heroTimer);
+}, 400);
+
+// ============================================================
+// PARTICLE BACKGROUND (hero) — тихие дрейфующие точки, ~ионы в почве
+// ============================================================
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function resizeCanvas(){
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+function initParticles(){
+  particles = [];
+  const count = Math.floor((canvas.width * canvas.height) / 22000);
+  for (let i = 0; i < count; i++){
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.4 + 0.4,
+      vx: (Math.random() - 0.5) * 0.15,
+      vy: (Math.random() - 0.5) * 0.15,
+    });
+  }
+}
+function animateParticles(){
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = 'rgba(180,255,57,0.5)';
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0) p.x = canvas.width;
+    if (p.x > canvas.width) p.x = 0;
+    if (p.y < 0) p.y = canvas.height;
+    if (p.y > canvas.height) p.y = 0;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  requestAnimationFrame(animateParticles);
+}
+window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+resizeCanvas(); initParticles(); animateParticles();
+
+// ============================================================
+// HERO STAGE PARALLAX (мышь → лёгкое смещение 3D-плейсхолдера)
+// ============================================================
+const heroStage = document.querySelector('.hero-stage');
+document.getElementById('hero').addEventListener('mousemove', (e) => {
+  const rect = document.getElementById('hero').getBoundingClientRect();
+  const x = (e.clientX - rect.left - rect.width/2) / rect.width;
+  const y = (e.clientY - rect.top - rect.height/2) / rect.height;
+  heroStage.style.transform = `translate(${x*10}px, ${y*10}px)`;
+});
+</script>
+</body>
+</html>
