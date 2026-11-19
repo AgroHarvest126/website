@@ -152,11 +152,26 @@ header.scrolled{
   letter-spacing:-0.01em;
   display:flex; align-items:center; gap:10px;
 }
-   .logo-img{
-    width:36px;
-    height:36px;
-    object-fit:contain;
-    display:block;
+/* Логотипы партнёров (шапка и блок «При поддержке») */
+.logo-group{ display:flex; align-items:center; gap:20px; }
+.logo-img{
+  height:36px;
+  width:auto;
+  object-fit:contain;
+  display:block;
+}
+.support-logos{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:24px;
+  margin-bottom:16px;
+  flex-wrap:wrap;
+}
+.support-logos .logo-img{ height:44px; }
+@media (max-width:900px){
+  .logo-img{ height:28px; }
+  .logo-group{ gap:12px; }
 }
 .logo-mark{
   width:24px; height:24px;
@@ -637,10 +652,10 @@ footer{
      HEADER
      ============================================================ -->
 <header id="site-header">
-<div class="logo">
+  <div class="logo logo-group">
     <img src="assets/images/fasie-logo.png" alt="Фонд содействия инновациям" class="logo-img">
-    <span>Фонд содействия инновациям</span>
-</div>
+    <img src="assets/images/platform-logo.png" alt="Платформа университетского технологического предпринимательства" class="logo-img">
+  </div>
   <nav>
     <ul class="nav-links">
       <li><a href="#how-it-works">Технология</a></li>
@@ -740,12 +755,13 @@ footer{
       <figcaption class="media-caption">Карта поля: серые точки — датчики с разряженным источником питания</figcaption>
     </figure>
 
-   <div class="stat-callout reveal">
-  До 23% датчиков в парке фермы простаивают из-за разряженных батарей в пиковый сезон полива<a href="https://rikasensor.com" target="_blank" rel="noopener" style="text-decoration: none; color: inherit; margin-left: 2px;">*</a>
-  <small style="display: block; margin-top: 8px; font-size: 0.8em; opacity: 0.7;">
-    * По данным исследования надежности полевых IoT-систем <a href="https://rikasensor.com" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline;">Rika Sensor</a>.
-  </small>
-</div>
+    <div class="stat-callout reveal">
+      До 23% датчиков в парке фермы простаивают из-за разряженных батарей в пиковый сезон полива<a href="https://rikasensor.com" target="_blank" rel="noopener" style="text-decoration: none; color: inherit; margin-left: 2px;">*</a>
+      <small style="display: block; margin-top: 8px; font-size: 0.8em; opacity: 0.7;">
+        * По данным исследования надежности полевых IoT-систем <a href="https://rikasensor.com" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline;">Rika Sensor</a>.
+      </small>
+    </div>
+  </div>
 </section>
 
 <!-- ============================================================
@@ -911,98 +927,95 @@ footer{
           </tr>
         </thead>
         <tbody id="compare-table-body" style="font-family:var(--font-mono);">
-  <!-- Источник питания -->
-  <tr style="border-bottom:1px solid var(--hairline-light);">
-    <td style="padding:14px 12px;">Источник питания</td>
-    <td style="padding:14px 12px; color:#5b5f54;">Литиевая батарея</td>
-    <td style="padding:14px 12px;">Почвенный гальванический элемент + аккумулятор</td>
-  </tr>
-  
-  <!-- Замена источника питания -->
-  <tr style="border-bottom:1px solid var(--hairline-light);">
-    <td style="padding:14px 12px;">Замена источника питания</td>
-    <td style="padding:14px 12px; color:#5b5f54;">Каждые 6–12 месяцев</td>
-    <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Не требуется</td>
-  </tr>
-  
-  <!-- Автономность -->
-  <tr style="border-bottom:1px solid var(--hairline-light);">
-    <td style="padding:14px 12px;">Автономность</td>
-    <td style="padding:14px 12px; color:#5b5f54;">Ограничена емкостью батареи</td>
-    <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Потенциально неограниченная при достаточной влажности почвы</td>
-  </tr>
-  
-  <!-- Необходимость обслуживания -->
-  <tr style="border-bottom:1px solid var(--hairline-light);">
-    <td style="padding:14px 12px;">Необходимость обслуживания</td>
-    <td style="padding:14px 12px; color:#5b5f54;">Периодическая замена батареи</td>
-    <td style="padding:14px 12px;">Минимальное обслуживание</td>
-  </tr>
-  
-  <!-- Интервал передачи -->
-  <tr style="border-bottom:1px solid var(--hairline-light);">
-    <td style="padding:14px 12px;">Интервал передачи</td>
-    <td style="padding:14px 12px; color:#5b5f54;">15–60 мин</td>
-    <td style="padding:14px 12px;">От 15 мин</td>
-  </tr>
-  
-  <!-- Протокол передачи -->
-  <tr style="border-bottom:1px solid var(--hairline-light);">
-    <td style="padding:14px 12px;">Протокол передачи</td>
-    <td style="padding:14px 12px; color:#5b5f54;">LoRa / NB-IoT</td>
-    <td style="padding:14px 12px;">LoRa</td>
-  </tr>
-  
-  <!-- Частота -->
-  <tr style="border-bottom:1px solid var(--hairline-light);">
-    <td style="padding:14px 12px;">Частота</td>
-    <td style="padding:14px 12px; color:#5b5f54;">433 / 868 МГц</td>
-    <td style="padding:14px 12px;">433 / 868 МГц</td>
-  </tr>
-  
-  <!-- Дальность передачи -->
-  <tr style="border-bottom:1px solid var(--hairline-light);">
-    <td style="padding:14px 12px;">Дальность передачи</td>
-    <td style="padding:14px 12px; color:#5b5f54;">До 10 км</td>
-    <td style="padding:14px 12px;">До 1 км</td>
-  </tr>
-  
-  <!-- Работа под мульчей -->
-  <tr style="border-bottom:1px solid var(--hairline-light);">
-    <td style="padding:14px 12px;">Работа под мульчей</td>
-    <td style="padding:14px 12px; color:#5b5f54;">Ограничена сроком службы батареи</td>
-    <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Без ограничений по ресурсу источника питания</td>
-  </tr>
-  
-  <!-- Рабочая температура -->
-  <tr style="border-bottom:1px solid var(--hairline-light);">
-    <td style="padding:14px 12px;">Рабочая температура</td>
-    <td style="padding:14px 12px; color:#5b5f54;">−20…+60 °C</td>
-    <td style="padding:14px 12px;">−20…+60 °C</td>
-  </tr>
-  
-  <!-- Класс защиты корпуса -->
-  <tr style="border-bottom:1px solid var(--hairline-light);">
-    <td style="padding:14px 12px;">Класс защиты корпуса</td>
-    <td style="padding:14px 12px; color:#5b5f54;">IP67</td>
-    <td style="padding:14px 12px;">IP55</td>
-  </tr>
-  
-  <!-- Экологичность -->
-  <tr>
-    <td style="padding:14px 12px;">Экологичность</td>
-    <td style="padding:14px 12px; color:#5b5f54;">Требуется утилизация батарей</td>
-    <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Без регулярной замены батарей</td>
-  </tr>
-</tbody>
+          <!-- Источник питания -->
+          <tr style="border-bottom:1px solid var(--hairline-light);">
+            <td style="padding:14px 12px;">Источник питания</td>
+            <td style="padding:14px 12px; color:#5b5f54;">Литиевая батарея</td>
+            <td style="padding:14px 12px;">Почвенный гальванический элемент + аккумулятор</td>
+          </tr>
 
+          <!-- Замена источника питания -->
+          <tr style="border-bottom:1px solid var(--hairline-light);">
+            <td style="padding:14px 12px;">Замена источника питания</td>
+            <td style="padding:14px 12px; color:#5b5f54;">Каждые 6–12 месяцев</td>
+            <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Не требуется</td>
+          </tr>
+
+          <!-- Автономность -->
+          <tr style="border-bottom:1px solid var(--hairline-light);">
+            <td style="padding:14px 12px;">Автономность</td>
+            <td style="padding:14px 12px; color:#5b5f54;">Ограничена емкостью батареи</td>
+            <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Потенциально неограниченная при достаточной влажности почвы</td>
+          </tr>
+
+          <!-- Необходимость обслуживания -->
+          <tr style="border-bottom:1px solid var(--hairline-light);">
+            <td style="padding:14px 12px;">Необходимость обслуживания</td>
+            <td style="padding:14px 12px; color:#5b5f54;">Периодическая замена батареи</td>
+            <td style="padding:14px 12px;">Минимальное обслуживание</td>
+          </tr>
+
+          <!-- Интервал передачи -->
+          <tr style="border-bottom:1px solid var(--hairline-light);">
+            <td style="padding:14px 12px;">Интервал передачи</td>
+            <td style="padding:14px 12px; color:#5b5f54;">15–60 мин</td>
+            <td style="padding:14px 12px;">От 15 мин</td>
+          </tr>
+
+          <!-- Протокол передачи -->
+          <tr style="border-bottom:1px solid var(--hairline-light);">
+            <td style="padding:14px 12px;">Протокол передачи</td>
+            <td style="padding:14px 12px; color:#5b5f54;">LoRa / NB-IoT</td>
+            <td style="padding:14px 12px;">LoRa</td>
+          </tr>
+
+          <!-- Частота -->
+          <tr style="border-bottom:1px solid var(--hairline-light);">
+            <td style="padding:14px 12px;">Частота</td>
+            <td style="padding:14px 12px; color:#5b5f54;">433 / 868 МГц</td>
+            <td style="padding:14px 12px;">433 / 868 МГц</td>
+          </tr>
+
+          <!-- Дальность передачи -->
+          <tr style="border-bottom:1px solid var(--hairline-light);">
+            <td style="padding:14px 12px;">Дальность передачи</td>
+            <td style="padding:14px 12px; color:#5b5f54;">До 10 км</td>
+            <td style="padding:14px 12px;">До 1 км</td>
+          </tr>
+
+          <!-- Работа под мульчей -->
+          <tr style="border-bottom:1px solid var(--hairline-light);">
+            <td style="padding:14px 12px;">Работа под мульчей</td>
+            <td style="padding:14px 12px; color:#5b5f54;">Ограничена сроком службы батареи</td>
+            <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Без ограничений по ресурсу источника питания</td>
+          </tr>
+
+          <!-- Рабочая температура -->
+          <tr style="border-bottom:1px solid var(--hairline-light);">
+            <td style="padding:14px 12px;">Рабочая температура</td>
+            <td style="padding:14px 12px; color:#5b5f54;">−20…+60 °C</td>
+            <td style="padding:14px 12px;">−20…+60 °C</td>
+          </tr>
+
+          <!-- Класс защиты корпуса -->
+          <tr style="border-bottom:1px solid var(--hairline-light);">
+            <td style="padding:14px 12px;">Класс защиты корпуса</td>
+            <td style="padding:14px 12px; color:#5b5f54;">IP67</td>
+            <td style="padding:14px 12px;">IP55</td>
+          </tr>
+
+          <!-- Экологичность -->
+          <tr>
+            <td style="padding:14px 12px;">Экологичность</td>
+            <td style="padding:14px 12px; color:#5b5f54;">Требуется утилизация батарей</td>
+            <td style="padding:14px 12px; color:var(--bio); background:rgba(180,255,57,0.08);">Без регулярной замены батарей</td>
+          </tr>
+        </tbody>
       </table>
+    </div>
   </div>
 </section>
 
-<!-- ============================================================
-     ПРИМЕНЕНИЕ
-     ============================================================ -->
 <!-- ============================================================
      ПРИМЕНЕНИЕ
      ============================================================ -->
@@ -1013,7 +1026,7 @@ footer{
     <p class="subtitle reveal">От открытых полевых культур до защищённого грунта.</p>
 
     <div class="carousel reveal">
-      
+
       <!-- Карточка 1: Полевые культуры -->
       <div class="carousel-card">
         <div class="media-box">
@@ -1150,7 +1163,7 @@ footer{
       </div>
     </div>
 
-       <!-- Кастомная line-art схема архитектуры -->
+    <!-- Кастомная line-art схема архитектуры -->
     <figure class="media-box reveal" style="margin-top:32px; border: 1px solid var(--hairline-dark); background: rgba(0,0,0,0.2);">
       <img src="assets/images/architecture-scheme.png" alt="Схема архитектуры системы AgroHarvest" style="width:100%; height:auto; display:block; min-height:200px; object-fit: cover;">
       <figcaption class="media-caption">Изометрическая схема архитектуры системы AgroHarvest</figcaption>
@@ -1205,14 +1218,13 @@ footer{
 <!-- ============================================================
      КОНТАКТЫ
      ============================================================ -->
-<!-- СЕКЦИЯ КОНТАКТОВ -->
 <section id="contact" class="section section-dark-alt" style="border-top: 1px solid var(--hairline-dark); padding-top: 80px; padding-bottom: 80px;">
   <div class="container" style="max-width: 500px; text-align: center;">
     <div class="eyebrow">Контакты</div>
     <h2 style="margin-bottom: 32px;">Связаться напрямую</h2>
-    
+
     <div style="background: var(--deep-soil); border: 1px solid var(--hairline-dark); padding: 32px 24px; border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 24px;">
-      
+
       <!-- ФИО -->
       <div>
         <p style="font-family: var(--font-mono); font-size: 11px; color: var(--stone); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Директор</p>
@@ -1237,12 +1249,18 @@ footer{
         </div>
       </div>
 
-     <!-- Фонд содействия инновациям -->
-      <div style="border-top: 1px solid var(--hairline-dark); padding-top: 16px;">
-        <p style="font-family: var(--font-mono); font-size: 11px; color: var(--stone); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">При поддержке</p>
-        <a href="https://www.fasie.ru" target="_blank" rel="noopener" style="font-size: 15px; color: var(--off-white); font-weight: 500; text-decoration: underline; transition: color 0.2s ease;" onmouseover="this.style.color='var(--bio)'" onmouseout="this.style.color='var(--off-white)'">
-          Фонд содействия инновациям
-        </a>
+      <!-- При поддержке: два логотипа + формулировка -->
+      <div style="border-top: 1px solid var(--hairline-dark); padding-top: 24px;">
+        <p style="font-family: var(--font-mono); font-size: 11px; color: var(--stone); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px;">При поддержке</p>
+        <div class="support-logos">
+          <a href="https://www.fasie.ru" target="_blank" rel="noopener">
+            <img src="assets/images/fasie-logo.png" alt="Фонд содействия инновациям" class="logo-img">
+          </a>
+          <img src="assets/images/platform-logo.png" alt="Платформа университетского технологического предпринимательства" class="logo-img">
+        </div>
+        <p style="font-size: 13px; color: var(--stone); line-height: 1.6;">
+          Проект реализован при поддержке Фонда содействия инновациям в рамках программы «Студенческий стартап» мероприятия «Платформа университетского технологического предпринимательства» федерального проекта «Технологии».
+        </p>
       </div>
 
     </div>
@@ -1252,7 +1270,7 @@ footer{
 
 <footer>
   <span>© 2026 AgroHarvest</span>
-  <span>Ставропольский край · Проект реализуется при поддержке Фонда содействия инновациям </span>
+  <span style="max-width:720px;">Ставропольский край · Проект реализован при поддержке Фонда содействия инновациям в рамках программы «Студенческий стартап» мероприятия «Платформа университетского технологического предпринимательства» федерального проекта «Технологии».</span>
 </footer>
 
 <script>
